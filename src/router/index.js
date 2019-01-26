@@ -5,36 +5,22 @@ import Login from '@/pages/Login/Login'
 import ProjectManage from '@/pages/projectManage/projectManage'
 import UserManage from '@/pages/userManage/userManage'
 import ManagerInfo from '@/pages/managerInfo/ManagerInfo'
+import error from '@/pages/404.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Home',
-      component: Home,
-      children:[{
-        path: '/projectManage',
-        name: 'projectManage',
-        component: ProjectManage
-      },
-      {
-        path: '/userManage',
-        name: 'userManage',
-        component: UserManage
-      },
-      {
-        path: '/managerInfo',
-        name: 'managerInfo',
-        component: ManagerInfo   
-      }]
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login
     },
+    {
+      path: '*',
+      name: '404',
+      component: error
+    }
   ]
 })
 

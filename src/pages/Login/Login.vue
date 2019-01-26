@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { adminMenu, userMenu } from '../../permission/permission.js'
 export default {
     name: 'login',
     data () {
@@ -43,6 +44,7 @@ export default {
                 })
                 .then(res => {
                     console.log(res);
+                    this.$router.addRoutes(adminMenu);
                     this.$router.push('/');
                     window.sessionStorage.setItem('user', JSON.stringify(res.data));
                 }).catch(err => {
