@@ -2,7 +2,10 @@
   <div class="layout">
     <Layout>
       <Header>
-        <div class="ws-app__header-logo">
+        <div class="ws-app__header-left">
+          **的实验室
+        </div>
+        <div class="ws-app__header-logo" hasPermission="rignt">
           尊敬的 {{userName}}你好
           <a @click="logout">登出</a>
         </div>
@@ -123,7 +126,9 @@ export default {
   beforeMount() {
     this.user = JSON.parse(window.sessionStorage.getItem("user")).data;
   },
-  mounted() {}
+  mounted() {
+
+  }
 };
 </script>
 
@@ -133,6 +138,11 @@ export default {
 }
 .ws-app__header-logo {
   float: right;
+  color: white;
+}
+.ws-app__header-left {
+  float: left;
+  width: 30%;
   color: white;
 }
 .body {

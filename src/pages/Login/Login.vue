@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import { adminMenu, userMenu } from '../../permission/permission.js'
+// 动态路由
+import { adminMenu, userMenu, generateRoutes } from '../../permission/permission.js'
+
 export default {
     name: 'login',
     data () {
@@ -44,11 +46,28 @@ export default {
                 })
                 .then(res => {
                     console.log(res);
-                    this.$router.addRoutes(adminMenu);
                     this.$router.push('/');
                     window.sessionStorage.setItem('user', JSON.stringify(res.data));
+                    try {
+                        if (res.data.isadmin) {
+                            console.log('admin');
+                            // sessionStorage.setItem('dynamicRoutes', JSON.stringify(adminMenu));
+                            // let menu = generateRoutes(adminMenu);
+                            // debugger;
+                            this.$router.addRoutes(adminMenu)
+                        } else {
+                            console.log('user')
+                            // debugger;
+                            sessionStorage.setItem('dynamicRoutes', JSON.stringify(userMenu));
+                            // let menu = generateRoutes(userMenu);
+                            // debugger;
+                            this.$router.addRoutes(userMenu)
+                        }
+                    } catch (e) {
+                        console.log(e)
+                    }
                 }).catch(err => {
-
+                    console.error(err)
                 })
         }
     }

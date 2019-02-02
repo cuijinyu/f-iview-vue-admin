@@ -1,44 +1,65 @@
-import router from 'vue-router';
-import Home from '@/pages/Home'
-import ProjectManage from '@/pages/projectManage/projectManage'
-import UserManage from '@/pages/userManage/userManage'
-import ManagerInfo from '@/pages/managerInfo/ManagerInfo'
-
 const adminMenu = [{
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('../pages/Home.vue'),
     children:[{
             path: '/projectManage',
             name: 'projectManage',
-            component: ProjectManage
+            component: () => import('../pages/projectManage/projectManage')
         },
         {
             path: '/userManage',
             name: 'userManage',
-            component: UserManage
+            component: () => import('../pages/userManage/userManage')
         },
         {
             path: '/managerInfo',
             name: 'managerInfo',
-            component: ManagerInfo   
+            component: () => import('../pages/managerInfo/ManagerInfo')
         },
         {
             path: '/userInfo',
             name: 'userInfo',
             component: () => import('../pages/userInfo/userInfo')
         }]
+  },
+  {
+    path: '*',
+    name: '404',
+    component: () => import('../pages/404.vue')
   }];
 
 const userMenu = [{
     path: '/',
     name: 'Home',
-    component: Home,
+    componentPath: '../pages/Home.vue',
     children:[{
             path: '/userInfo',
             name: 'userInfo',
             component: () => import('../pages/userInfo/userInfo')
     }]
-  }];
+  },
+  {
+    path: '*',
+    name: '404',
+    component: () => import('../pages/404.vue')
+}];
 
-export { adminMenu, userMenu };
+const generateRoutes = (menu, router) => {
+    if(menu instanceof Array){
+        menu.forEach(menuItem => {
+            menuItem.component = () => import(menuItem.componentPath)
+            if (menuItem.hasOwnProperty('children')) {
+                generateRoutes(menuItem.children)
+            }
+        });
+    } else {
+        menu.component =  () => import(menuItem.componentPath)
+        if (menu.hasOwnProperty('children')) {
+            generateRoutes(menu.children)
+        }
+    }
+    return menu;
+}
+
+export { adminMenu, userMenu, generateRoutes };
