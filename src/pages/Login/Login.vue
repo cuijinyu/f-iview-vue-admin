@@ -49,7 +49,8 @@ export default {
                     this.$router.push('/');
                     window.sessionStorage.setItem('user', JSON.stringify(res.data));
                     try {
-                        if (res.data.isadmin) {
+                        console.log(res.data)
+                        if (res.data.data.isadmin) {
                             console.log('admin');
                             // sessionStorage.setItem('dynamicRoutes', JSON.stringify(adminMenu));
                             // let menu = generateRoutes(adminMenu);
